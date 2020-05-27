@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+JavaScript-based barcode generators:
+- using: https://github.com/lindell/JsBarcode
+- alternative: https://github.com/metafloor/bwip-js
+-->
+
+<head>
+	<meta charset="utf-8" />
+	<title>https://github.com/lindell/JsBarcode</title>
+
+	<!-- CDN delivery of https://github.com/lindell/JsBarcode, must be downloaded and used statically for project-layer -->
+	<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
+
+	<style>
+		* {
+			font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			font-size: 20px;
+			/* https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing */
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			padding: 20px;
+		}
+
+		img {
+			/* https://stackoverflow.com/questions/10844205/html-5-strange-img-always-adds-3px-margin-at-bottom */
+			/* "display: block" prevents "position: absolute" and "overflow: hidden" from working properly, thus use "vertical-align" */
+			vertical-align: middle;
+		}
+
+		#barcodeForm,
+		#barcodePageTitle {
+			margin-bottom: 40px;
+		}
+
+		#barcodePage {
+			/* https://stackoverflow.com/questions/20446252/stretch-div-to-a4-size */
+			width: 29.7cm;
+			/* 21cm creates a new page in the print dialog, so we must use 1mm less */
+			height: 20.9cm;
+			/* top and bottom reduced by height of #barcodeHeader and #barcodeFooter */
+			padding: 2cm 5cm;
+			zoom: 0.333;
+			border: 1px black solid;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+			display: flex;
+			flex-direction: column;
+			visibility: hidden;
+		}
+
+		#barcodeHeader,
+		#barcodeFooter {
+			flex-grow: 0;
+			/* subtract this from #barcodePage's top and bottom initial padding */
+			min-height: 3cm;
+			display: flex;
+			justify-content: center;
+		}
+
+		#barcodeHeader {
+			align-items: flex-end;
+		}
+
+		#barcodeFooter {
+			align-items: flex-start;
+		}
+
+		#barcodeMain {
+			flex-grow: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			overflow: hidden;
+		}
+
+		/* https://stackoverflow.com/questions/12991351/css-force-image-resize-and-keep-aspect-ratio */
+		#barcodeImage {
+			width: 100%;
+			max-width: 100%;
+		}
+
+		#barcodeHeader>div:nth-child(1),
+		#barcodeFooterText {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		#barcodeHeader *,
+		#barcodeFooterText {
+			/* adjust font-size to fit into #barcodeHeader and #barcodeFooter */
+			font-size: 2.1cm;
+			font-weight: bold;
+		}
+
+		@page {
+			size: A4 landscape;
+			margin: 0;
+			padding: 0;
+		}
+
+		/* https://stackoverflow.com/questions/1071962/how-do-i-print-part-of-a-rendered-html-page-in-javascript */
+		/* https://stackoverflow.com/questions/32699436/media-print-css */
+		@media print {
+
+			html,
+			body {
+				margin: 0 !important;
+				padding: 0 !important;
+			}
+
+			#barcodeForm,
+			#barcodePageTitle {
+				display: none !important;
+			}
+
+			#barcodePage {
+				zoom: 1 !important;
+				margin: 0 !important;
+				border: none !important;
+				box-shadow: none !important;
+			}
+		}
+	</style>
+
+	<script type="text/javascript">
+		function barcodeRender() {
+			const barcodePage = document.querySelector("#barcodePage");
+			const barcodeImage = document.querySelector("#barcodeImage");
+			const barcodeHeaderText = document.querySelector("#barcodeHeaderText");
+			const barcodeFooterText = document.querySelector("#barcodeFooterText");
+
+			const barcodeHeaderInput = document.querySelector("#barcodeHeaderInput");
+			const barcodeFooterInput = document.querySelector("#barcodeFooterInput");
+
+			if (barcodePage && barcodeImage && barcodeHeaderText && barcodeFooterText && barcodeHeaderInput && barcodeFooterInput) {
+				const textHeader = barcodeHeaderInput.value;
+				const textFooter = barcodeFooterInput.value;
+				if (textHeader && textFooter) {
+					JsBarcode(
+						"#barcodeImage",
+						textFooter,
+						{
+							width: 5, // for high quality rendering, default is 2
+							height: 550, // to fill the entire barcode-area for 15-characters-long strings, default is 100
+							displayValue: false, // we display the value ourselves below
+							margin: 0,
+						}
+					);
+					barcodeHeaderText.innerText = textHeader;
+					barcodeFooterText.innerText = textFooter;
+					barcodePage.style.visibility = "visible";
+				} else {
+					barcodePage.style.visibility = "hidden";
+				}
+			}
+		}
+		function barcodePrint() {
+			window.print();
+		}
+	</script>
+</head>
+
+<body>
+	<section id="barcodeForm" style="display: table; border-collapse: collapse;">
+		<div style="display: table-row;">
+			<div style="display: table-cell;">
+				Text above the barcode:
+			</div>
+			<div style="display: table-cell; padding: 0 0 20px 20px;">
+				<input id="barcodeHeaderInput" type="text" autocomplete="off" required spellcheck="false"
+					value="123AB" />
+			</div>
+		</div>
+		<div style="display: table-row;">
+			<div style="display: table-cell;">
+				Text in the barcode and below it:
+			</div>
+			<div style="display: table-cell; padding: 0 0 20px 20px;">
+				<input id="barcodeFooterInput" type="text" autocomplete="off" required spellcheck="false"
+					value="123AB456" />
+			</div>
+		</div>
+		<div style="display: table-row;">
+			<div style="display: table-cell;"></div>
+			<div style="display: table-cell; padding-left: 20px;">
+				<button onclick="barcodeRender();">Render page</button><button onclick="barcodePrint();"
+					style="margin-left: 20px;">Print page</button>
+			</div>
+		</div>
+	</section>
+
+	<section id="barcodePageTitle">
+		A4 page to print:
+	</section>
+
+	<!-- https://css-tricks.com/complete-guide-table-element/ -->
+	<section id="barcodePage">
+		<div id="barcodeHeader">
+			<div>Ziel: <span id="barcodeHeaderText"></span></div>
+		</div>
+		<!-- https://stackoverflow.com/questions/41939831/flexbox-center-text-vertically -->
+		<div id="barcodeMain">
+			<img id="barcodeImage" />
+		</div>
+		<div id="barcodeFooter">
+			<div id="barcodeFooterText"></div>
+		</div>
+	</section>
+</body>
+
+</html>
