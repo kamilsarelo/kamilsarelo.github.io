@@ -93,6 +93,11 @@
 			color: black;
 			text-decoration: none;
 		}
+
+
+		#braveBookmarks {
+			margin-top: 40px;
+		}
 	</style>
 </head>
 <body>
@@ -100,10 +105,12 @@
 		<div class="grid-container flex-items">
 
 			<!-- Coronavirus Update (Live): 86,501,378 Cases and 1,869,308 Deaths from COVID-19 Virus Pandemic - Worldometer -->
-			<a href="https://www.worldometers.info/coronavirus/" class="grid-cell flex-container"><!-- b"> -->
+			<!--
+			<a href="https://www.worldometers.info/coronavirus/" class="grid-cell flex-container">
 				<img src="https://www.worldometers.info/favicon/favicon.ico" class="flex-items" />
 				<div class="flex-items">Coronavirus</div>
 			</a>
+			-->
 
 			<!-- Onet – Jesteś na bieżąco -->
 			<a href="https://www.onet.pl/" class="grid-cell flex-container">
@@ -136,6 +143,12 @@
 			<a href="https://gotowanie.onet.pl/" class="grid-cell flex-container">
 				<img src="https://gotowanie.onet.pl/favicon.ico" class="flex-items" />
 				<div class="flex-items">Onet<br />Gotowanie</div>
+			</a>
+
+			<!-- Amazon.de: Günstige Preise für Elektronik & Foto, Filme, Musik, Bücher, Games, Spielzeug & mehr -->
+			<a href="https://www.amazon.de/" class="grid-cell flex-container"><!-- a"> -->
+				<img src="https://www.amazon.com/favicon.ico" class="flex-items" />
+				<div class="flex-items">Amazon.de</div>
 			</a>
 
 			<!-- Newsweek - Aktualne wiadomości z Polski i ze świata -->
@@ -187,12 +200,6 @@
 				<div class="flex-items">derStandard.at</div>
 			</a>
 
-			<!-- Amazon.de: Günstige Preise für Elektronik & Foto, Filme, Musik, Bücher, Games, Spielzeug & mehr -->
-			<a href="https://www.amazon.de/" class="grid-cell flex-container"><!-- a"> -->
-				<img src="https://www.amazon.com/favicon.ico" class="flex-items" />
-				<div class="flex-items">Amazon.de</div>
-			</a>
-
 			<!-- Weranda.pl – najpiękniejsze polskie domy i mieszkania, ogrody, sztuka | Weranda.pl -->
 			<a href="https://www.weranda.pl/" class="grid-cell flex-container">
 				<img src="https://www.weranda.pl/images/front/favicon/android-icon-192x192.png" class="flex-items" />
@@ -208,12 +215,17 @@
 			<!-- Reddit Soccer Streams -->
 			<!-- <a href="https://reddt1.soccerstreams.net/" class="grid-cell flex-container"> -->
 			<a href="https://soccerstreamlinks.com/" class="grid-cell flex-container">
-				<img src="https://ih1.redbubble.net/image.983749444.4897/st,small,507x507-pad,600x600,f8f8f8.u1.jpg" class="flex-items" />
-				<div class="flex-items">Soccer</div>
-				<!-- <div class="flex-items">Soccer Streams</div> -->
+				<img src="https://cdn-icons-png.flaticon.com/512/4982/4982019.png" class="flex-items" />
+				<div class="flex-items">piłka nożna</div>
 			</a>
 
-			<!--  -->
+			<!-- volleyball -->
+			<a href="https://volleyball.sportshub.fan/" class="grid-cell flex-container">
+				<img src="https://cdn-icons-png.flaticon.com/512/184/184093.png" class="flex-items" />
+				<div class="flex-items">siatkówka</div>
+			</a>
+
+			<!-- ... -->
 			<!--
 			<a href="" class="grid-cell flex-container ">
 				<img src="" class="flex-items" />
@@ -226,6 +238,16 @@
 			-->
 
 		</div>
+		<script>
+			function run(){
+				var URL = "brave://bookmarks";
+				window.open(URL, null);
+			}
+		</script>
+		<div id="braveBookmarks" onclick="run(); return false;">dalsze zakładki</a></div>
+		<!--
+		<div id="braveBookmarks"><a href="brave://bookmarks" target="_blank">...dalsze zakładki</a></div>
+		-->
 	</div>
 </body>
 </html>
