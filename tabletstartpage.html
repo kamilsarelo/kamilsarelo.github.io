@@ -35,12 +35,13 @@
             }
         }
         .icon-container {
-            @apply w-28 h-28 flex flex-col items-center justify-center bg-white rounded-xl shadow-md transition-all duration-200;
+            @apply w-28 h-28 flex flex-col items-center justify-center bg-white rounded-xl shadow-md;
             border: 3px solid transparent;
+            transition: transform 333ms, box-shadow 333ms;
         }
         .icon-container:hover {
             @apply shadow-2xl;
-            transform: scale(1.05);
+            transform: scale(1.0333);
             border-color: #4a5568;
         }
         .icon-image {
